@@ -1,9 +1,9 @@
 import {STAGE_TYPES} from "../enum/STAGE_TYPES";
+import {IChoice} from "./IChoice";
 
-export interface IStage{
+export interface IStageAnswering{
   id?: number,
-  choiceText: string[],
-  response: string[],
+  response: IChoice[],
   stage_type?: STAGE_TYPES,
   stageOrder?: number,
   question: string

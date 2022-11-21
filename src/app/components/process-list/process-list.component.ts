@@ -2,6 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {ProcessService} from "../../process.service";
 import {Subject, takeUntil} from "rxjs";
 import {IProcess} from "../../interface/IProcess";
+import {IProcessAnswering} from "../../interface/IProcessAnswering";
 
 @Component({
   selector: 'app-process-list',
@@ -10,7 +11,7 @@ import {IProcess} from "../../interface/IProcess";
 })
 export class ProcessListComponent implements OnDestroy{
 
-  processList!: IProcess[];
+  processList!: IProcessAnswering[];
   onDestroy = new Subject();
 
 

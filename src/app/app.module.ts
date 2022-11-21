@@ -8,6 +8,7 @@ import { ProcessComponent } from './components/process/process.component';
 import { ProcessDisplayComponent } from './components/process-display/process-display.component';
 import { StageComponent } from './components/stage/stage.component';
 import {HttpClientModule} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {HttpClientModule} from "@angular/common/http";
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
