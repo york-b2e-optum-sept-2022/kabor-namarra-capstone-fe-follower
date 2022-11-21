@@ -1,0 +1,8 @@
+<div *ngIf="!viewingProcess">
+  <div>
+    <app-process-list></app-process-list>
+  </div>
+</div>
+<div *ngIf="viewingProcess">
+  <app-process></app-process>
+</div>
