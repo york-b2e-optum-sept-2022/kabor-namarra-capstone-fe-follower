@@ -5,6 +5,7 @@ import {IProcess} from "./interface/IProcess";
 import {IStageAnswering} from "./interface/IStageAnswering";
 import {IProcessAnswering} from "./interface/IProcessAnswering";
 import {IChoice} from "./interface/IChoice";
+import {IStage} from "./interface/IStage";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,8 @@ export class ProcessService {
 
   private processList: IProcessAnswering[] = [];
   private process!: IProcessAnswering;
+
+  private finishedProcess!: IProcessAnswering;
 
 
 
@@ -56,6 +59,8 @@ export class ProcessService {
 
   onProcessClick(process: IProcessAnswering){
     this.process = process;
+    this.finishedProcess = {...process}
+    this.finishedProcess.stages = [];
     this.onViewing()
   }
 
@@ -66,6 +71,60 @@ export class ProcessService {
   onViewing(){
     this.viewingProcess = !this.viewingProcess;
     this.$viewingProcess.next(this.viewingProcess);
+  }
+
+  onNextStage(stage: IStageAnswering){
+
+    if(this.finishedProcess.stages.findIndex(finishedStage => finishedStage.stageOrder === stage.stageOrder) >(-1)){
+      this.finishedProcess.stages.splice(this.finishedProcess.stages.findIndex(finishedStage => finishedStage.stageOrder === stage.stageOrder), 1)
+    }
+    this.finishedProcess.stages.push(stage)
+    console.log(this.finishedProcess.stages);
+
+
+    if(stage.stageOrder === (this.process.stages.length) && this.finishedProcess.stages.length === this.process.stages.length){
+      this.onFinishProcess();
+    }
+  }
+
+
+  onFinishProcess(){
+    let submitProcess: IProcess = {name: "", stages: []}
+
+    if(this.finishedProcess.name){
+      submitProcess.name = this.finishedProcess.name
+    }
+
+    if(this.finishedProcess.stages){
+      for(let stage of this.finishedProcess.stages){
+        let choiceList: string[] = []
+        let responseList: string[] = []
+
+        for(let choice of stage.response){
+          choiceList.push(choice.choiceText)
+          responseList.push(choice.response)
+        }
+
+        if(stage.stageOrder && stage.stage_type && stage.question){
+          submitProcess.stages.push({
+            choiceText: choiceList,
+            response: responseList,
+            stage_type: stage.stage_type,
+            stageOrder: stage.stageOrder,
+            question: stage.question})
+        }
+      }
+    }
+
+    this.http.postFinishedProcess(submitProcess).pipe(first()).subscribe({
+      next: (submittedProcess) => {
+        console.log(submittedProcess)
+      },
+      error: (err) => {
+        console.error(err)
+      }
+    })
+
   }
 
 
