@@ -1,7 +1,74 @@
 <div>
-  <button (click)="onBackClick()">Back</button>
-  <app-stage *ngFor="let stage of process.stages"
-             [stage] = stage
-  >
-  </app-stage>
+  <h3>
+    {{process.name}}
+  </h3>
+  <button type="button" class="btn btn-secondary" (click)="onBackClick()">Back</button>
+<!--  <app-stage *ngFor="let stage of process.stages"-->
+<!--             [stage] = stage-->
+<!--  >-->
+<!--  </app-stage>-->
+
+
+<!--  <button (click)="onSaveClick()">Next</button>-->
+  <span id="scroll-Btn">
+    <button *ngIf="canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()">Previous</button>
+    <button *ngIf="!canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()" disabled>Previous</button>
+    <button *ngIf="canGoUp" type="button" class="btn btn-secondary" (click)="onSaveClick()">Next</button>
+    <button *ngIf="!canGoUp" type="button" class="btn btn-secondary" (click)="onSaveClick()">Save</button>
+  </span>
+<div *ngIf="stage">
+
+    <div class="grid" *ngIf="stage.stage_type === 'TEXT_ANSWER'" >
+      <article>
+        <span class="row-cols-3">
+              <p class="fw-bold">{{stage.question}}</p>
+              <span *ngFor="let response of stage.response; let i = index">
+                <span class="input-group mb-3 center-block" >
+                  <div class="input-group-prepend">
+                    <div class="input-group-text" id="{{response.choiceText}}+{{i}}">{{response.choiceText}}</div>
+                  </div>
+                  <input type="text" class="form-control" size="100" [attr.aria-describedby]="'response.choice'+ 'i'" [(ngModel)]="response.response">
+                </span>
+              </span>
+        </span>
+      </article>
+    </div>
+
+    <div class="grid" *ngIf="stage.stage_type === 'MULTIPLE_CHOICE'">
+      <article>
+        <div class="form-check" >
+          <div class="row col-5">
+            <p class="fw-bold">{{stage.question}}</p>
+            <div class="form-check mb-2">
+              <div *ngFor="let response of stage.response; let i = index">
+                <input *ngIf="response.response !== '' " class="form-check-input" type="radio" name="flexRadioDefault" id="{{response.choiceText}} + {{i}}" checked (click)="onResponseClick(response.choiceText,i)">
+                <input *ngIf="response.response === '' " class="form-check-input" type="radio" name="flexRadioDefault" id="{{response.choiceText}} + {{i}}" (click)="onResponseClick(response.choiceText,i)">
+                <label class="form-check-label" for="{{response.choiceText}} + {{i}}">
+                  {{response.choiceText}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="grid" *ngIf="stage.stage_type === 'MULTIPLE_CHECKBOX'">
+      <article >
+        <div class="form-check" >
+          <div class="row col-5">
+            <p class="fw-bold">{{stage.question}}</p>
+            <div *ngFor="let response of stage.response; let i = index">
+              <input *ngIf="response.response !== '' " class="form-check-input" type="checkbox" value="" id="{{response.choiceText}} + {{i}}" checked (click)="onResponseClick(response.choiceText,i)">
+              <input *ngIf="response.response === '' " class="form-check-input" type="checkbox" value="" id="{{response.choiceText}} + {{i}}" (click)="onResponseClick(response.choiceText,i)">
+              <label class="form-check-label" for="{{response.choiceText}} + {{i}}">
+                {{response.choiceText}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+</div>
+
 </div>

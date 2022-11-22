@@ -15,6 +15,7 @@ export class ProcessService {
   $viewingProcess = new Subject<boolean>();
   $processList = new Subject<IProcessAnswering[]>()
   $process = new Subject<IProcessAnswering>();
+  $finishedProcess = new Subject<IProcessAnswering>();
 
 
   private processList: IProcessAnswering[] = [];
@@ -43,8 +44,8 @@ export class ProcessService {
               for (let stageChoice of stage.choiceText) {
                 choiceList.push({choiceText: stageChoice, response: ""})
               }
-            }
             getStageList.push({response:choiceList, stage_type: stage.stage_type, stageOrder: stage.stageOrder, question:stage.question})
+            }
           }
           this.processList.push({name: process.name, stages: getStageList});
         }
@@ -74,7 +75,7 @@ export class ProcessService {
   }
 
   onNextStage(stage: IStageAnswering){
-
+    console.log(this.finishedProcess)
     if(this.finishedProcess.stages.findIndex(finishedStage => finishedStage.stageOrder === stage.stageOrder) >(-1)){
       this.finishedProcess.stages.splice(this.finishedProcess.stages.findIndex(finishedStage => finishedStage.stageOrder === stage.stageOrder), 1)
     }
@@ -85,6 +86,9 @@ export class ProcessService {
     if(stage.stageOrder === (this.process.stages.length) && this.finishedProcess.stages.length === this.process.stages.length){
       this.onFinishProcess();
     }
+    console.log(this.finishedProcess)
+    this.$finishedProcess.next(this.finishedProcess);
+    // this.$process.next(this.finishedProcess);
   }
 
 
@@ -118,6 +122,7 @@ export class ProcessService {
 
     this.http.postFinishedProcess(submitProcess).pipe(first()).subscribe({
       next: (submittedProcess) => {
+        this.onViewing();
         console.log(submittedProcess)
       },
       error: (err) => {
