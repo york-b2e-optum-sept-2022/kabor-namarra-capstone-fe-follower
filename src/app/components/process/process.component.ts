@@ -42,15 +42,19 @@ export class ProcessComponent implements OnDestroy{
       if(this.stage) {
         if (this.stage.stageOrder) {
           this.stage = this.process.stages[this.stage.stageOrder]
+          this.canGoDown = true;
+        }
+      }
 
-          if(this.stage.stage_type === STAGE_TYPES.MULTIPLE_CHECKBOX){
-            for(let i in this.stage.response){
-              if(this.stage.response[i].response !== ""){
-                this.arr.push( this.stage.response.indexOf(this.stage.response[i]) +1);
+      if(this.stage){
+        if(this.stage.stage_type) {
+          if (this.stage.stage_type === STAGE_TYPES.MULTIPLE_CHECKBOX) {
+            for (let i in this.stage.response) {
+              if (this.stage.response[i].response !== "") {
+                this.arr.push(this.stage.response.indexOf(this.stage.response[i]) + 1);
               }
             }
           }
-          this.canGoDown = true;
         }
       }
       if(this.stage) {
