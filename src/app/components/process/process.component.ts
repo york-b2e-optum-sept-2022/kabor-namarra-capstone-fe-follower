@@ -35,7 +35,6 @@ export class ProcessComponent implements OnDestroy{
     })
     this.processService.$finishedProcess.pipe(takeUntil(this.onDestroy)).subscribe( process => {
       this.arr = [];
-      console.log("hello")
 
       this.process.stages[this.stage.stageOrder-1] = {...this.stage};
 
@@ -66,7 +65,6 @@ export class ProcessComponent implements OnDestroy{
           }
         }
       }
-      console.log(this.arr)
     })
   }
 
@@ -99,7 +97,6 @@ export class ProcessComponent implements OnDestroy{
         this.arr.push(index + 1)
       }
     }
-    console.log(this.stage.response)
   }
 
   onPreviousClick(){

@@ -14,7 +14,7 @@
     <button *ngIf="canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()">Previous</button>
     <button *ngIf="!canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()" disabled>Previous</button>
     <button *ngIf="canGoUp" type="button" class="btn btn-secondary" (click)="onSaveClick()">Next</button>
-    <button *ngIf="!canGoUp" type="button" class="btn btn-secondary" (click)="onSaveClick()">Save</button>
+    <button *ngIf="!canGoUp" type="button" class="btn btn-success" (click)="onSaveClick()">Save</button>
   </span>
 <div *ngIf="stage">
 

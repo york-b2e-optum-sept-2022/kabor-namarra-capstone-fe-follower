@@ -32,7 +32,6 @@ export class StageComponent {
         this.arr.push(index + 1)
       }
     }
-    console.log(this.stage.response)
   }
 
   onSaveClick(){

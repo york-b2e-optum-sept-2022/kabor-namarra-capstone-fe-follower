@@ -18,7 +18,6 @@ export class ProcessListComponent implements OnDestroy{
   constructor(public processService: ProcessService) {
     this.processService.$processList.pipe(takeUntil(this.onDestroy)).subscribe( processList => {
       this.processList = processList;
-      console.log(processList)
     })
   }
 
