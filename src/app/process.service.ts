@@ -52,6 +52,7 @@ export class ProcessService {
         this.$processList.next(this.processList);
       },
       error: (err) => {
+        alert("Server is having an issue. Please try again later.")
         console.error(err);
       }
     })
@@ -75,18 +76,15 @@ export class ProcessService {
   }
 
   onNextStage(stage: IStageAnswering){
-    console.log(this.finishedProcess)
     if(this.finishedProcess.stages.findIndex(finishedStage => finishedStage.stageOrder === stage.stageOrder) >(-1)){
       this.finishedProcess.stages.splice(this.finishedProcess.stages.findIndex(finishedStage => finishedStage.stageOrder === stage.stageOrder), 1)
     }
     this.finishedProcess.stages.push(stage)
-    console.log(this.finishedProcess.stages);
 
 
     if(stage.stageOrder === (this.process.stages.length) && this.finishedProcess.stages.length === this.process.stages.length){
       this.onFinishProcess();
     }
-    console.log(this.finishedProcess)
     this.$finishedProcess.next(this.finishedProcess);
     // this.$process.next(this.finishedProcess);
   }
@@ -126,6 +124,7 @@ export class ProcessService {
         console.log(submittedProcess)
       },
       error: (err) => {
+        alert("Server is having an issue. Please try again later.")
         console.error(err)
       }
     })
