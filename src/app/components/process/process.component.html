@@ -39,7 +39,6 @@
         <div class="form-check" >
           <div class="row col-5">
             <p class="fw-bold">{{stage.question}}</p>
-            <div class="form-check mb-2">
               <div *ngFor="let response of stage.response; let i = index">
                 <input *ngIf="response.response !== '' " class="form-check-input" type="radio" name="flexRadioDefault" id="{{response.choiceText}} + {{i}}" checked (click)="onResponseClick(response.choiceText,i)">
                 <input *ngIf="response.response === '' " class="form-check-input" type="radio" name="flexRadioDefault" id="{{response.choiceText}} + {{i}}" (click)="onResponseClick(response.choiceText,i)">
@@ -47,7 +46,6 @@
                   {{response.choiceText}}
                 </label>
               </div>
-            </div>
           </div>
         </div>
       </article>
