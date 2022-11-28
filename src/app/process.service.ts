@@ -36,6 +36,10 @@ export class ProcessService {
     this.processList = [];
     this.http.getProcessList().pipe(first()).subscribe({
       next: (processList) => {
+        for(let process of processList) {
+          process.stages.sort((p1, p2) =>
+            (p1.stageOrder > p2.stageOrder) ? 1 : (p1.stageOrder < p2.stageOrder) ? -1 : 0);
+        }
         for(let process of processList){
           let getStageList: IStageAnswering[] = [];
           for(let stage of process.stages){

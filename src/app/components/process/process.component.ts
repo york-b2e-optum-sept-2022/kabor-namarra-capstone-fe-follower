@@ -27,7 +27,7 @@ export class ProcessComponent implements OnDestroy{
       this.process = process;
       if(this.starting) {
         this.stage = this.process.stages[0]
-        if (process.stages.length > 0) {
+        if (process.stages.length > 1) {
           this.canGoUp = true;
         }
         this.starting = false;
