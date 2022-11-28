@@ -1,15 +1,15 @@
 <div>
-  <h3>
-    {{process.name}}
-  </h3>
   <button type="button" class="btn btn-secondary" (click)="onBackClick()">Back</button>
-<!--  <app-stage *ngFor="let stage of process.stages"-->
-<!--             [stage] = stage-->
-<!--  >-->
-<!--  </app-stage>-->
+  <!--  <app-stage *ngFor="let stage of process.stages"-->
+  <!--             [stage] = stage-->
+  <!--  >-->
+  <!--  </app-stage>-->
 
 
-<!--  <button (click)="onSaveClick()">Next</button>-->
+  <!--  <button (click)="onSaveClick()">Next</button>-->
+  <h1>
+    {{process.name}}
+  </h1>
   <span id="scroll-Btn">
     <button *ngIf="canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()">Previous</button>
     <button *ngIf="!canGoDown" type="button" class="btn btn-secondary" (click)="onPreviousClick()" disabled>Previous</button>
